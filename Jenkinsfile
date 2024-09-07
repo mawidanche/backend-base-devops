@@ -1,11 +1,10 @@
 pipeline {
-    agent any
 //    environment {
 //
 //    }
 //    options {
 //
-//   }
+ //   }
     stages {
         stage('Build and Test'){
             agent {
@@ -35,8 +34,17 @@ pipeline {
         stage('Code Quality'){
             stages {
                 stage('SonarQube analysis') {
+                    agent {
+                        docker {
+                            image 'sonarsource/sonar-scanner-cli' 
+                            args '--network="devops-infra_default"'
+                            reuseNode true
+                        }
+                    }
                     steps {
-                        sh 'echo "en construccion ..."'
+                        withSonarQubeEnv('sonarqube') {
+                            sh 'sonar-scanner'
+                        }
                     }
                 }
                 stage('Quality Gate') {
