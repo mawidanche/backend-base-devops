@@ -50,7 +50,9 @@ pipeline {
                 }
                 stage('Quality Gate') {
                     steps {
-                        sh 'echo "en construccion ..."'
+                        withSonarQubeEnv('sonarqube') {
+                            sh 'sonar-scanner'
+                        }
                     }
                 }
             }
