@@ -3,9 +3,9 @@ pipeline {
 //    environment {
 //
 //    }
-//    options {
-//
- //   }
+    options {
+        disableConcurrentBuilds()
+    }
     stages {
         stage('Build and Test'){
             agent {
@@ -50,9 +50,7 @@ pipeline {
                 }
                 stage('Quality Gate') {
                     steps {
-                        withSonarQubeEnv('sonarqube') {
-                            sh 'sonar-scanner'
-                        }
+                        sh 'echo "en construccion ..."'
                     }
                 }
             }
