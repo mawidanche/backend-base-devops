@@ -1,10 +1,10 @@
 pipeline {
-    environment {
-
-    }
-    options {
-
-    }
+//    environment {
+//
+//    }
+//    options {
+//
+//   }
     stages {
         stage('Build and Test'){
             agent {
