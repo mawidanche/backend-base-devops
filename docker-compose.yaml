@@ -1,4 +1,4 @@
-name: backend-base
+name: backend-base-devops
 services:
   backend:
     image: localhost:8082/backend-base-devops:latest
