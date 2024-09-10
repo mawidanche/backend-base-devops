@@ -72,7 +72,7 @@ pipeline {
         }
         stage('deploy'){
             steps {
-                sh 'echo "en construccion ..."'
+                sh 'echo "en construccion "'
             }
         }
     }
