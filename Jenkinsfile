@@ -1,8 +1,8 @@
 pipeline {
     agent any
-//    environment {
-//
-//    }
+    environment {
+        USERNAME = 'cmd'
+    }
     options {
         disableConcurrentBuilds()
     }
@@ -72,7 +72,9 @@ pipeline {
         }
         stage('deploy'){
             steps {
-                sh 'echo "en construccion "'
+                script {
+                    sh "kubectl set image deployments backend-base-devops-deployment backend-base-devops=localhost:8082/backend-base-devops:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+                }
             }
         }
     }
