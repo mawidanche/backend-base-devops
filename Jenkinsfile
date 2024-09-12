@@ -73,7 +73,13 @@ pipeline {
         stage('deploy'){
             steps {
                 script {
-                    sh "kubectl set image deployments backend-base-devops-deployment backend-base-devops=localhost:8082/backend-base-devops:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+                    sh "kubectl get namespace devops || kubectl create namespace devops"
+                    def deploymentExists = sh(script: "kubectl get deployment backend-base-devops-deployment -n devops", returnStatus: true) == 0
+                    if (!deploymentExists) {
+                        sh "kubectl apply -f kubernetes.yaml -n devops"
+                    } 
+                    sh "kubectl set image deployment/backend-base-devops-deployment backend-base-devops=localhost:8082/backend-base-devops:${env.BRANCH_NAME}-${env.BUILD_NUMBER} -n devops"
+
                 }
             }
         }
