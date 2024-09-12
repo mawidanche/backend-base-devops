@@ -79,7 +79,8 @@ pipeline {
                         sh "kubectl apply -f kubernetes.yaml -n devops"
                     } 
                     sh "kubectl set image deployment/backend-base-devops-deployment backend-base-devops=localhost:8082/backend-base-devops:${env.BRANCH_NAME}-${env.BUILD_NUMBER} -n devops"
-
+                    sh "kubectl scale deployment backend-base-devops-deployment --replicas 0"
+                    sh "kubectl scale deployment backend-base-devops-deployment --replicas 3"
                 }
             }
         }
